@@ -31,7 +31,6 @@ namespace SimpleSqlTests
             var Con2 = new SqlConnection(ConStr2);
             var Params = new SqlCommand().Parameters;
             var Params2 = new List<SqlParameter>();
-            SqlTransaction Trans;
             for (int i = 0; i < 3; i++)
             {
                 Params.AddWithValue('@' + i.ToString(), i);
@@ -97,10 +96,8 @@ namespace SimpleSqlTests
                 Assert.AreEqual(Params2[i].ParameterName, Cmd.Parameters[i].ParameterName);
                 Assert.AreEqual(Params2[i].Value, Cmd.Parameters[i].Value);
             }
-
-            // Skipping 16
-
-            // Test20 - CommandText, ConnectionString, SqlCredential
+            
+            // Test17 - CommandText, ConnectionString, SqlCredential
             Cmd = SqlCmd.New(Command2, ConStr2, Cred);
             Assert.AreEqual(Command2, Cmd.CommandText);
             Assert.IsNotNull(Cmd.Connection);
@@ -109,7 +106,7 @@ namespace SimpleSqlTests
             Assert.AreEqual(Cred, Cmd.Connection.Credential);
             Cmd = null;
 
-            // Test24 - CommandText, CommandType, Timeout, SqlParameterCollection
+            // Test20 - CommandText, CommandType, Timeout, SqlParameterCollection
             Cmd = SqlCmd.New(Command3, CommandType.StoredProcedure, 15, Params);
             Assert.AreEqual(Command3, Cmd.CommandText);
             Assert.AreEqual(CommandType.StoredProcedure, Cmd.CommandType);
@@ -121,7 +118,7 @@ namespace SimpleSqlTests
             }
             Cmd = null;
 
-            // Test49 - CommandText, ConnectionString, Username, Password
+            // Test32 - CommandText, ConnectionString, Username, Password
             Cmd = SqlCmd.New(Command, ConStr2, UsrNm, Pwd);
             Assert.AreEqual(Command, Cmd.CommandText);
             Assert.IsNotNull(Cmd.Connection);
@@ -131,7 +128,7 @@ namespace SimpleSqlTests
             Assert.AreEqual(8, Cmd.Connection.Credential.Password.Length);
             Cmd = null;
 
-            // Test87 - CommandText, ConnectionString, SqlCredentail, CommandType, Timeout, List<SqlParameter>
+            // Test50 - CommandText, ConnectionString, SqlCredentail, CommandType, Timeout, List<SqlParameter>
             Cmd = SqlCmd.New(Command, ConStr2, Cred, CommandType.Text, 30, Params2);
             Assert.AreEqual(Command, Cmd.CommandText);
             Assert.AreEqual(CommandType.Text, Cmd.CommandType);
@@ -147,7 +144,7 @@ namespace SimpleSqlTests
             }
             Cmd = null;
 
-            // Test116 - CommandText, ConnectionString, Username, Password, CommandType, Timeout, List<SqlParameter>
+            // Test57 - CommandText, ConnectionString, Username, Password, CommandType, Timeout, List<SqlParameter>
             Cmd = SqlCmd.New(Command, ConStr2, UsrNm, Pwd, CommandType.Text, 120, Params2);
             Assert.AreEqual(Command, Cmd.CommandText);
             Assert.AreEqual(CommandType.Text, Cmd.CommandType);
@@ -163,14 +160,71 @@ namespace SimpleSqlTests
                 Assert.AreEqual(Params2[i].Value, Cmd.Parameters[i].Value);
             }
             Cmd = null;
-
-            // Skiping 131
         }
 
         [TestMethod]
         public void NewCommandInvalidInput()
         {
-            // Not Implemented Yet
+            // Build test variables for later
+            var Con = new SqlConnection(ConStr);
+            var Con2 = new SqlConnection(ConStr2);
+            var Params = new SqlCommand().Parameters;
+            var Params2 = new List<SqlParameter>();
+            for (int i = 0; i < 3; i++)
+            {
+                Params.AddWithValue('@' + i.ToString(), i);
+                Params2.Add(new SqlParameter('@' + i.ToString(), i + 1));
+            }
+            // Create fake credentials to test with
+            var Cipher = new System.Security.SecureString();
+            foreach (char c in Pwd)
+                Cipher.AppendChar(c);
+
+            // Test the attempt to create without ReadOnly password
+            try
+            {
+                SqlCmd.New(Command2, ConStr2, UsrNm, Cipher);
+            }
+            catch (ArgumentException ae)
+            {
+                Assert.AreEqual("password must be marked as read only.", ae.Message);
+            }
+            catch { Assert.Fail(); }
+
+            // Make ReadOnly and continue testing
+            Cipher.MakeReadOnly();
+            var Cred = new SqlCredential(UsrNm, Cipher);
+
+            // Test the attempt to create with IntegratedSecurity = True and Credentials
+            try
+            {
+                SqlCmd.New(Command2, ConStr, Cred);
+            }
+            catch (ArgumentException ae)
+            {
+                Assert.AreEqual("Cannot use Credential with Integrated Security connection string keyword.", ae.Message);
+            }
+            catch { Assert.Fail(); }
+
+            // Test the attempt to create with null Credentials
+            try
+            {
+                SqlCmd.New(Command2, ConStr2, null, "");
+            }
+            catch (ArgumentException ae)
+            {
+                Assert.AreEqual("Value cannot be null.\r\nParameter name: userId", ae.Message);
+            }
+            catch { Assert.Fail(); }
+            try
+            {
+                SqlCmd.New(Command2, ConStr2, null, new System.Security.SecureString());
+            }
+            catch (ArgumentException ae)
+            {
+                Assert.AreEqual("Value cannot be null.\r\nParameter name: userId", ae.Message);
+            }
+            catch { Assert.Fail(); }
         }
     }
 }

@@ -43,16 +43,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction)
-        {
-            return new SqlCommand(CommandText, Connection, Transaction); // Return new SqlCommand object using Connection to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
         public static SqlCommand New(string CommandText, string ConnectionString)
@@ -63,32 +53,11 @@ namespace SimpleSql
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction); // Return new SqlCommand object using ConnectionString to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
         public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)); // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction); // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -106,18 +75,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction); // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
         public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password)
@@ -128,23 +85,6 @@ namespace SimpleSql
                 Ciphertext.AppendChar(c);
             Ciphertext.MakeReadOnly();
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))); // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction); // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -168,34 +108,12 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type)
-        {
-            return new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type }; // Return new SqlCommand object using Connection with specified CommandType to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
         public static SqlCommand New(string CommandText, string ConnectionString, CommandType Type)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type }; // Return new SqlCommand object using ConnectionString with specified CommandType to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type }; // Return new SqlCommand object using ConnectionString with specified CommandType to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -207,18 +125,6 @@ namespace SimpleSql
         public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, CommandType Type)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -237,19 +143,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -261,24 +154,6 @@ namespace SimpleSql
                 Ciphertext.AppendChar(c);
             Ciphertext.MakeReadOnly();
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -304,18 +179,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type, int Timeout)
-        {
-            return new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using Connection with specified CommandType to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -323,18 +186,6 @@ namespace SimpleSql
         public static SqlCommand New(string CommandText, string ConnectionString, CommandType Type, int Timeout)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString with specified CommandType to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString with specified CommandType to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -347,19 +198,6 @@ namespace SimpleSql
         public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, CommandType Type, int Timeout)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials with specified CommandType to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials with specified CommandType to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -379,20 +217,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials with specified CommandType to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -405,25 +229,6 @@ namespace SimpleSql
                 Ciphertext.AppendChar(c);
             Ciphertext.MakeReadOnly();
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type, int Timeout)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type, CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -447,35 +252,12 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, int Timeout)
-        {
-            return new SqlCommand(CommandText, Connection, Transaction) { CommandTimeout = Timeout }; // Return new SqlCommand object using Connection to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
         public static SqlCommand New(string CommandText, string ConnectionString, int Timeout)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -488,18 +270,6 @@ namespace SimpleSql
         public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, int Timeout)
         {
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -518,19 +288,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, int Timeout)
-        {
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -542,24 +299,6 @@ namespace SimpleSql
                 Ciphertext.AppendChar(c);
             Ciphertext.MakeReadOnly();
             return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, int Timeout)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            return new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandTimeout = Timeout }; // Return new SqlCommand object using ConnectionString and Credentials to execute CommandText as Transaction
         }
 
         // <summary>Build a new SqlCommand object</summary>
@@ -593,22 +332,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -618,22 +341,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type, CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -650,23 +357,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type, CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -692,24 +382,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -724,207 +396,6 @@ namespace SimpleSql
             Ciphertext.MakeReadOnly();
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type, int Timeout, SqlParameterCollection Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password))) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, int Timeout, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, int Timeout, SqlParameterCollection Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, int Timeout, SqlParameterCollection Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -958,21 +429,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
@@ -981,21 +437,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1011,22 +452,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1051,23 +476,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
@@ -1081,28 +489,6 @@ namespace SimpleSql
             Ciphertext.MakeReadOnly();
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type, SqlParameterCollection Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1134,20 +520,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction);
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -1155,20 +527,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString));
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction);
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1183,21 +541,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials));
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction);
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1221,22 +564,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, SqlParameterCollection Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction);
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -1249,27 +576,6 @@ namespace SimpleSql
             Ciphertext.MakeReadOnly();
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)));
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="SqlParameterCollection">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, SqlParameterCollection Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction);
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1305,22 +611,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -1330,22 +620,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type, CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1362,23 +636,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type, CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1404,24 +661,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
@@ -1436,207 +675,6 @@ namespace SimpleSql
             Ciphertext.MakeReadOnly();
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type, int Timeout, List<SqlParameter> Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type, CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password))) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, int Timeout, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, int Timeout, List<SqlParameter> Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandTimeout = Timeout };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Timeout" type="int">The number of second until timing out to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, int Timeout, List<SqlParameter> Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandTimeout = Timeout };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1670,21 +708,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, CommandType Type, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
@@ -1693,21 +716,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString)) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, CommandType Type, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1723,22 +731,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials)) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, CommandType Type, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1763,23 +755,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, CommandType Type, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
@@ -1793,28 +768,6 @@ namespace SimpleSql
             Ciphertext.MakeReadOnly();
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext))) { CommandType = Type };
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Type" type="CommandType">The CommandType object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, CommandType Type, List<SqlParameter> Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction) { CommandType = Type };
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1846,20 +799,6 @@ namespace SimpleSql
 
         // <summary>Build a new SqlCommand object</summary>
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="Connection" type="SqlConnection">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, SqlConnection Connection, SqlTransaction Transaction, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, Connection, Transaction);
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
         // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -1867,20 +806,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString));
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The SqlConnection object to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlTransaction Transaction, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString), Transaction);
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1895,21 +820,6 @@ namespace SimpleSql
         {
             // Create SqlCommand object
             var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials));
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Credentials" type="SqlCredentials">The credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, SqlCredential Credentials, SqlTransaction Transaction, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, Credentials), Transaction);
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
@@ -1933,22 +843,6 @@ namespace SimpleSql
         // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
         // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
         // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="SecureString">The ciphertext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, System.Security.SecureString Password, SqlTransaction Transaction, List<SqlParameter> Params)
-        {
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Password)), Transaction);
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
         // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
         // <return>SqlCommand</return>
@@ -1964,29 +858,5 @@ namespace SimpleSql
             AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
             return Command; // Return new SqlCommand object
         }
-
-        // <summary>Build a new SqlCommand object</summary>
-        // <param name="CommandText" type="string">The text of the command to execute in the new SqlCommand object</param>
-        // <param name="ConnectionString" type="string">The connection string to utilize in the new SqlCommand object</param>
-        // <param name="Username" type="string">The username of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Password" type="string">The plaintext password of the credentials to utilize in the new SqlCommand object</param>
-        // <param name="Transaction" type="SqlTransaction">The SqlTransaction object to utilize in the new SqlCommand object</param>
-        // <param name="Params" type="List<SqlParameter>">The collection of SqlParameters to utilize in the new SqlCommand object</param>
-        // <return>SqlCommand</return>
-        public static SqlCommand New(string CommandText, string ConnectionString, string Username, string Password, SqlTransaction Transaction, List<SqlParameter> Params)
-        {
-            // Convert the plaintext Password in to a SecureString object
-            var Ciphertext = new System.Security.SecureString();
-            foreach (char c in Password)
-                Ciphertext.AppendChar(c);
-            Ciphertext.MakeReadOnly();
-            // Create SqlCommand object
-            var Command = new SqlCommand(CommandText, new SqlConnection(ConnectionString, new SqlCredential(Username, Ciphertext)), Transaction);
-            AddCollection(ref Command, ref Params); // Mutate the SqlCommand object with the parameter collection
-            return Command; // Return new SqlCommand object
-        }
-
-
-
     }
 }
