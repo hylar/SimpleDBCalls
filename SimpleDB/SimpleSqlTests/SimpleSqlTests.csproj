@@ -58,8 +58,8 @@
     <Compile Include="SqlCmdTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimpleDB\SimpleSql.csproj">
-      <Project>{fec14815-2135-4dfe-a989-33bb43ddb4da}</Project>
+    <ProjectReference Include="..\SimpleSql\SimpleSql.csproj">
+      <Project>{092a914c-e624-42fa-9249-c924e8f4e501}</Project>
       <Name>SimpleSql</Name>
     </ProjectReference>
   </ItemGroup>
