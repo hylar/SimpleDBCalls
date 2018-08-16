@@ -155,5 +155,24 @@ namespace SimpleSql
         {
             return NonQuery(new SqlCommand(Cmd, new SqlConnection(Con)));
         }
+
+        /// <summary>
+        /// Runs an ExecuteScalar method on the SqlCommand and returns the value of type T
+        /// </summary>
+        /// <typeparam name="T">The Type of expected return value</typeparam>
+        /// <param name="cmd">The SqlCommand to execute</param>
+        /// <returns></returns>
+        public static T Scalar<T>(SqlCommand cmd)
+        {
+            try
+            {
+                cmd.Connection.Open();
+                return (T)cmd.ExecuteScalar();
+            }
+            finally
+            {
+                cmd.Connection.Close();
+            }
+        }
     }
 }
